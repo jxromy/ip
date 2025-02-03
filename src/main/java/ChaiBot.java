@@ -1,43 +1,37 @@
-import java.util.Scanner;
-
 public class ChaiBot {
-    private TaskList taskList;
-    private Scanner scanner;
+    private TaskList tasks;
 
     public ChaiBot() {
-        this.taskList = new TaskList();
-        this.scanner = new Scanner(System.in);
+        this.tasks = new TaskList();
     }
 
-    public void run() {
-        String logo = "            ('-. .-.   ('-.              \n" +
-                "           ( OO )  /  ( OO ).-.          \n" +
-                "  '  .--./ |  | |  |  | \\-.  \\   |  |OO) \n" +
-                "   .-----. ,--. ,--.  / . --. /  ,-.-')  \n" +
-                "  |  |('-. |   .|  |.-'-'  |  |  |  |  \\ \n" +
-                " /_) |OO  )|       | \\| |_.'  |  |  |(_/ \n" +
-                " ||  |`-'| |  .-.  |  |  .-.  | ,|  |_.' \n" +
-                " (_'  '--'\\ |  | |  |  |  | |  |(_|  |    \n" +
-                "   `-----' `--' `--'  `--' `--'  `--'    \n";
-
-        Ui.showWelcomeMessage(logo);
-
-        while (true) {
-            String input = scanner.nextLine();
-
-            if (input.equals("bye")) {
-                Ui.showExitMessage();
-                break;
-            } else if (input.equals("list")) {
-                taskList.printTasks();
+    public boolean handleInput(String input) {
+        if (input.equals("bye")) {
+            Ui.showExitMessage();
+            return false;
+        } else if (input.equals("list")) {
+            tasks.printTasks();
+        } else if (input.startsWith("mark ")) {
+            try {
+                int taskNumber = Integer.parseInt(input.substring(5));
+                tasks.markTask(taskNumber);
+            } catch (NumberFormatException e) {
+                Ui.showInvalidNumberMessage();
+            }
+        } else if (input.startsWith("unmark ")) {
+            try {
+                int taskNumber = Integer.parseInt(input.substring(7));
+                tasks.unmarkTask(taskNumber);
+            } catch (NumberFormatException e) {
+                Ui.showInvalidNumberMessage();
+            }
+        } else {
+            if (tasks.addTask(input)) {
+                Ui.showAddedMessage(input);
             } else {
-                if (taskList.addTask(input)) {
-                    Ui.showAddedMessage(input);
-                } else {
-                    Ui.showListFullMessage();
-                }
+                Ui.showListFullMessage();
             }
         }
-        scanner.close();
+        return true;
     }
 }
