@@ -5,32 +5,29 @@ public class ChaiBot {
         this.tasks = new TaskList();
     }
 
-    public boolean handleInput(String input) {
+    public boolean handleCommand(String input) {
         if (input.equals("bye")) {
-            Ui.showExitMessage();
+            UserInterface.showExitMessage();
             return false;
         } else if (input.equals("list")) {
             tasks.printTasks();
         } else if (input.startsWith("mark ")) {
-            try {
-                int taskNumber = Integer.parseInt(input.substring(5));
-                tasks.markTask(taskNumber);
-            } catch (NumberFormatException e) {
-                Ui.showInvalidNumberMessage();
-            }
+            int taskNumber = Integer.parseInt(input.substring(5));
+            tasks.markTask(taskNumber);
         } else if (input.startsWith("unmark ")) {
-            try {
-                int taskNumber = Integer.parseInt(input.substring(7));
-                tasks.unmarkTask(taskNumber);
-            } catch (NumberFormatException e) {
-                Ui.showInvalidNumberMessage();
-            }
+            int taskNumber = Integer.parseInt(input.substring(7));
+            tasks.unmarkTask(taskNumber);
+        } else if (input.startsWith("todo ")) {
+            String description = input.substring(5);
+            tasks.addTask(new Todo(description));
+        } else if (input.startsWith("deadline ")) {
+            String[] parts = input.substring(9).split(" /by ");
+            tasks.addTask(new Deadline(parts[0], parts[1]));
+        } else if (input.startsWith("event ")) {
+            String[] parts = input.substring(6).split(" /from | /to ");
+            tasks.addTask(new Event(parts[0], parts[1], parts[2]));
         } else {
-            if (tasks.addTask(input)) {
-                Ui.showAddedMessage(input);
-            } else {
-                Ui.showListFullMessage();
-            }
+            UserInterface.showUnknownCommandMessage();
         }
         return true;
     }

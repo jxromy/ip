@@ -15,12 +15,12 @@ public class Chai {
                 " (_'  '--'\\ |  | |  |  |  | |  |(_|  |    \n" +
                 "   `-----' `--' `--'  `--' `--'  `--'    \n";
 
-        Ui.showWelcomeMessage(logo);
+        UserInterface.showWelcomeMessage(logo);
 
-        boolean running = true;
-        while (running) {
+        boolean isRunning = true;
+        while (isRunning) {
             input = in.nextLine().trim();
-            running = bot.handleInput(input);
+            isRunning = bot.handleCommand(input);
         }
 
         in.close();

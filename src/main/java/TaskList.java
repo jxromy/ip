@@ -1,40 +1,36 @@
+import java.util.ArrayList;
+
 public class TaskList {
-    private static final int MAX_SIZE = 100;
-    private Task[] list;
-    private int listIndex;
+    private ArrayList<Task> tasks;
 
     public TaskList() {
-        this.list = new Task[MAX_SIZE];
-        this.listIndex = 0;
+        this.tasks = new ArrayList<>();
     }
 
-    public boolean addTask(String description) {
-        if (listIndex >= MAX_SIZE) {
-            return false;
-        }
-        list[listIndex++] = new Task(description);
-        return true;
+    public void addTask(Task task) {
+        tasks.add(task);
+        UserInterface.showTaskAddedMessage(task, tasks.size());
     }
 
     public void markTask(int taskNumber) {
-        if (taskNumber < 1 || taskNumber > listIndex) {
-            Ui.showOutOfRangeMessage();
+        if (taskNumber < 1 || taskNumber > tasks.size()) {
+            UserInterface.showOutOfRangeMessage(tasks.size());
             return;
         }
-        list[taskNumber - 1].markAsDone();
-        Ui.showTaskMarkedMessage(list[taskNumber - 1]);
+        tasks.get(taskNumber - 1).setDoneStatus(true);
+        UserInterface.showTaskMarkedMessage(tasks.get(taskNumber - 1));
     }
 
     public void unmarkTask(int taskNumber) {
-        if (taskNumber < 1 || taskNumber > listIndex) {
-            Ui.showOutOfRangeMessage();
+        if (taskNumber < 1 || taskNumber > tasks.size()) {
+            UserInterface.showOutOfRangeMessage(tasks.size());
             return;
         }
-        list[taskNumber - 1].markAsNotDone();
-        Ui.showTaskUnmarkedMessage(list[taskNumber - 1]);
+        tasks.get(taskNumber - 1).setDoneStatus(false);
+        UserInterface.showTaskUnmarkedMessage(tasks.get(taskNumber - 1));
     }
 
     public void printTasks() {
-        Ui.showTaskList(list, listIndex);
+        UserInterface.showTaskList(tasks);
     }
 }
