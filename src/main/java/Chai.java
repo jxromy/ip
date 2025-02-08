@@ -20,7 +20,11 @@ public class Chai {
         boolean isRunning = true;
         while (isRunning) {
             input = in.nextLine().trim();
-            isRunning = bot.handleCommand(input);
+            try {
+                isRunning = bot.handleCommand(input);
+            } catch (ChaiException e) {
+                UserInterface.showUnknownCommandMessage(e.getMessage());
+            }
         }
 
         in.close();

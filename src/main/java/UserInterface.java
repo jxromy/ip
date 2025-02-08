@@ -37,7 +37,7 @@ public class UserInterface {
         System.out.println(LINE + "\nOK, I've marked this task as not done yet:\n " + task + "\n" + LINE);
     }
 
-    public static void showUnknownCommandMessage() {
-        System.out.println(LINE + "\nError: Unknown command!\n" + LINE);
+    public static void showUnknownCommandMessage(String errorMessage) {
+        System.out.println(LINE + "\nChai failure: " + errorMessage + '\n' + LINE);
     }
 }
