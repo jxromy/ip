@@ -4,17 +4,8 @@ public class Chai {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         ChaiBot bot = new ChaiBot();
-        String logo = "            ('-. .-.   ('-.              \n" +
-                "           ( OO )  /  ( OO ).-.          \n" +
-                "  '  .--./ |  | |  |  | \\-.  \\   |  |OO) \n" +
-                "   .-----. ,--. ,--.  / . --. /  ,-.-')  \n" +
-                "  |  |('-. |   .|  |.-'-'  |  |  |  |  \\ \n" +
-                " /_) |OO  )|       | \\| |_.'  |  |  |(_/ \n" +
-                " ||  |`-'| |  .-.  |  |  .-.  | ,|  |_.' \n" +
-                " (_'  '--'\\ |  | |  |  |  | |  |(_|  |    \n" +
-                "   `-----' `--' `--'  `--' `--'  `--'    \n";
 
-        UserInterface.showWelcomeMessage(logo);
+        UserInterface.showWelcomeMessage();
 
         boolean isRunning = true;
         while (isRunning) {

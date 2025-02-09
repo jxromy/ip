@@ -2,9 +2,19 @@ import java.util.List;
 
 public class UserInterface {
     private static final String LINE = "____________________________________________________________";
+    private static final String LOGO =
+        "            ('-. .-.   ('-.              \n" +
+        "           ( OO )  /  ( OO ).-.          \n" +
+        "  '  .--./ |  | |  |  | \\-.  \\   |  |OO) \n" +
+        "   .-----. ,--. ,--.  / . --. /  ,-.-')  \n" +
+        "  |  |('-. |   .|  |.-'-'  |  |  |  |  \\ \n" +
+        " /_) |OO  )|       | \\| |_.'  |  |  |(_/ \n" +
+        " ||  |`-'| |  .-.  |  |  .-.  | ,|  |_.' \n" +
+        " (_'  '--'\\ |  | |  |  |  | |  |(_|  |    \n" +
+        "   `-----' `--' `--'  `--' `--'  `--'    \n";
 
-    public static void showWelcomeMessage(String logo) {
-        System.out.println(LINE + "\nHello! I'm Chai\n" + logo + "What can I do for you?\n" + LINE);
+    public static void showWelcomeMessage() {
+        System.out.println(LINE + "\nHello! I'm Chai\n" + LOGO + "What can I do for you?\n" + LINE);
     }
 
     public static void showExitMessage() {
@@ -31,6 +41,14 @@ public class UserInterface {
 
     public static void showTaskUnmarkedMessage(Task task) {
         System.out.println(LINE + "\nOK, I've marked this task as not done yet:\n " + task + "\n" + LINE);
+    }
+
+    public static void showTaskAlreadyMarkedMessage() {
+        System.out.println(LINE + "\nOops, this task was already been done\n" + LINE);
+    }
+
+    public static void showTaskAlreadyUnmarkedMessage() {
+        System.out.println(LINE + "\nSorry, this task has not been been done\n" + LINE);
     }
 
     public static void showUnknownCommandMessage(String errorMessage) {
