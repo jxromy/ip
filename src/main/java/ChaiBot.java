@@ -1,5 +1,7 @@
 public class ChaiBot {
-    private TaskList tasks;
+    public static final String DEADLINE_FORMAT_INCORRECT_MESSAGE = "Deadline format incorrect! Use: deadline <task> /by <date>";
+    public static final String EVENT_FORMAT_INCORRECT_MESSAGE = "Event format incorrect! Use: event <task> /from <start> /to <end>";
+    private final TaskList tasks;
 
     public ChaiBot() {
         this.tasks = new TaskList();
@@ -32,19 +34,17 @@ public class ChaiBot {
         }
 
         case "todo":
-            if (entry.isEmpty()) {
-                throw new ChaiException("The description cannot be empty.");
-            }
+            ChaiException.descriptionCannotBeEmpty(entry);
             tasks.addTask(new Todo(entry));
             break;
 
         case "deadline": {
             if (!entry.contains("/by")) {
-                throw new ChaiException("Deadline format incorrect! Use: deadline <task> /by <date>");
+                ChaiException.incorrectFormat(DEADLINE_FORMAT_INCORRECT_MESSAGE);
             }
             String[] deadlineParts = entry.split(" /by ");
             if (deadlineParts.length < 2) {
-                throw new ChaiException("You need to specify a deadline!");
+                ChaiException.missingArgument("deadline");
             }
             tasks.addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
             break;
@@ -52,11 +52,11 @@ public class ChaiBot {
 
         case "event": {
             if (!entry.contains("/from") || !entry.contains("/to")) {
-                throw new ChaiException("Event format incorrect! Use: event <task> /from <start> /to <end>");
+                ChaiException.incorrectFormat(EVENT_FORMAT_INCORRECT_MESSAGE);
             }
             String[] eventParts = entry.split(" /from | /to ");
             if (eventParts.length < 3) {
-                throw new ChaiException("You need to specify both start and end time!");
+                ChaiException.missingArgument("start and end time");
             }
             tasks.addTask(new Event(eventParts[0], eventParts[1], eventParts[2]));
             break;

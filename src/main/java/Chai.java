@@ -4,7 +4,6 @@ public class Chai {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         ChaiBot bot = new ChaiBot();
-        String input;
         String logo = "            ('-. .-.   ('-.              \n" +
                 "           ( OO )  /  ( OO ).-.          \n" +
                 "  '  .--./ |  | |  |  | \\-.  \\   |  |OO) \n" +
@@ -19,7 +18,7 @@ public class Chai {
 
         boolean isRunning = true;
         while (isRunning) {
-            input = in.nextLine().trim();
+            String input = in.nextLine().trim();
             try {
                 isRunning = bot.handleCommand(input);
             } catch (ChaiException e) {

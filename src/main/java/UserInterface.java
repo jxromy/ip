@@ -11,10 +11,6 @@ public class UserInterface {
         System.out.println(LINE + "\nBye. Hope to see you again soon!\n" + LINE);
     }
 
-    public static void showOutOfRangeMessage(int max) {
-        System.out.println(LINE + "\nError: Task number is out of range! (Valid range: 1 to " + max + ")\n" + LINE);
-    }
-
     public static void showTaskList(List<Task> tasks) {
         System.out.println(LINE);
         System.out.println(" Here are the tasks in your list:");
