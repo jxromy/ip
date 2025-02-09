@@ -1,3 +1,12 @@
+package chai;
+
+import chai.exceptions.ChaiException;
+import chai.tasks.Deadline;
+import chai.tasks.Event;
+import chai.tasks.TaskList;
+import chai.tasks.Todo;
+import chai.ui.UserInterface;
+
 public class ChaiBot {
     public static final String DEADLINE_FORMAT_INCORRECT_MESSAGE = "Deadline format incorrect! Use: deadline <task> /by <date>";
     public static final String EVENT_FORMAT_INCORRECT_MESSAGE = "Event format incorrect! Use: event <task> /from <start> /to <end>";

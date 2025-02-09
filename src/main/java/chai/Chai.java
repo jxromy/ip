@@ -1,3 +1,8 @@
+package chai;
+
+import chai.exceptions.ChaiException;
+import chai.ui.UserInterface;
+
 import java.util.Scanner;
 
 public class Chai {

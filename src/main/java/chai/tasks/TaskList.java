@@ -1,3 +1,8 @@
+package chai.tasks;
+
+import chai.exceptions.ChaiException;
+import chai.ui.UserInterface;
+
 import java.util.ArrayList;
 
 public class TaskList {
