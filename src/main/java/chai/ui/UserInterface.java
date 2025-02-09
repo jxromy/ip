@@ -1,3 +1,7 @@
+package chai.ui;
+
+import chai.tasks.Task;
+
 import java.util.List;
 
 public class UserInterface {
