@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TaskList {
-    private ArrayList<Task> tasks;
+    private final ArrayList<Task> tasks;
 
     public TaskList() {
         this.tasks = new ArrayList<>();
@@ -12,18 +12,26 @@ public class TaskList {
         UserInterface.showTaskAddedMessage(task, tasks.size());
     }
 
-    public void markTask(int taskNumber) {
+    public void markTask(int taskNumber) throws ChaiException {
+        if (tasks.isEmpty()) {
+            ChaiException.taskListCannotBeEmpty();
+            return;
+        }
         if (taskNumber < 1 || taskNumber > tasks.size()) {
-            UserInterface.showOutOfRangeMessage(tasks.size());
+            ChaiException.taskNumberOutOfRange(tasks.size());
             return;
         }
         tasks.get(taskNumber - 1).setDoneStatus(true);
         UserInterface.showTaskMarkedMessage(tasks.get(taskNumber - 1));
     }
 
-    public void unmarkTask(int taskNumber) {
+    public void unmarkTask(int taskNumber) throws ChaiException {
+        if (tasks.isEmpty()) {
+            ChaiException.taskListCannotBeEmpty();
+            return;
+        }
         if (taskNumber < 1 || taskNumber > tasks.size()) {
-            UserInterface.showOutOfRangeMessage(tasks.size());
+            ChaiException.taskNumberOutOfRange(tasks.size());
             return;
         }
         tasks.get(taskNumber - 1).setDoneStatus(false);

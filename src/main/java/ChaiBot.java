@@ -1,33 +1,69 @@
 public class ChaiBot {
-    private TaskList tasks;
+    public static final String DEADLINE_FORMAT_INCORRECT_MESSAGE = "Deadline format incorrect! Use: deadline <task> /by <date>";
+    public static final String EVENT_FORMAT_INCORRECT_MESSAGE = "Event format incorrect! Use: event <task> /from <start> /to <end>";
+    private final TaskList tasks;
 
     public ChaiBot() {
         this.tasks = new TaskList();
     }
 
-    public boolean handleCommand(String input) {
-        if (input.equals("bye")) {
+    public boolean handleCommand(String input) throws ChaiException {
+        String[] commands = input.split(" ", 2);
+        String command = commands[0];
+        String entry = commands.length > 1 ? commands[1] : "";
+
+        switch (command) {
+        case "bye":
             UserInterface.showExitMessage();
             return false;
-        } else if (input.equals("list")) {
+
+        case "list":
             tasks.printTasks();
-        } else if (input.startsWith("mark ")) {
-            int taskNumber = Integer.parseInt(input.substring(5));
-            tasks.markTask(taskNumber);
-        } else if (input.startsWith("unmark ")) {
-            int taskNumber = Integer.parseInt(input.substring(7));
-            tasks.unmarkTask(taskNumber);
-        } else if (input.startsWith("todo ")) {
-            String description = input.substring(5);
-            tasks.addTask(new Todo(description));
-        } else if (input.startsWith("deadline ")) {
-            String[] parts = input.substring(9).split(" /by ");
-            tasks.addTask(new Deadline(parts[0], parts[1]));
-        } else if (input.startsWith("event ")) {
-            String[] parts = input.substring(6).split(" /from | /to ");
-            tasks.addTask(new Event(parts[0], parts[1], parts[2]));
-        } else {
-            UserInterface.showUnknownCommandMessage();
+            break;
+
+        case "mark": {
+            int taskNum = Integer.parseInt(entry);
+            tasks.markTask(taskNum);
+            break;
+        }
+
+        case "unmark": {
+            int taskNum = Integer.parseInt(entry);
+            tasks.unmarkTask(taskNum);
+            break;
+        }
+
+        case "todo":
+            ChaiException.descriptionCannotBeEmpty(entry);
+            tasks.addTask(new Todo(entry));
+            break;
+
+        case "deadline": {
+            if (!entry.contains("/by")) {
+                ChaiException.incorrectFormat(DEADLINE_FORMAT_INCORRECT_MESSAGE);
+            }
+            String[] deadlineParts = entry.split(" /by ");
+            if (deadlineParts.length < 2) {
+                ChaiException.missingArgument("deadline");
+            }
+            tasks.addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+            break;
+        }
+
+        case "event": {
+            if (!entry.contains("/from") || !entry.contains("/to")) {
+                ChaiException.incorrectFormat(EVENT_FORMAT_INCORRECT_MESSAGE);
+            }
+            String[] eventParts = entry.split(" /from | /to ");
+            if (eventParts.length < 3) {
+                ChaiException.missingArgument("start and end time");
+            }
+            tasks.addTask(new Event(eventParts[0], eventParts[1], eventParts[2]));
+            break;
+        }
+
+        default:
+            throw new ChaiException("Unknown command: " + command);
         }
         return true;
     }
