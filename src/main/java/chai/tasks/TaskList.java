@@ -18,7 +18,8 @@ public class TaskList {
     }
 
     public void markTask(int taskNumber) throws ChaiException {
-        Task task = checkTaskNumber(taskNumber);
+        checkTaskNumber(taskNumber);
+        Task task = tasks.get(taskNumber - 1);
         if (!task.getDoneStatus()) {
             task.setDoneStatus(true);
             UserInterface.showTaskMarkedMessage(task);
@@ -28,7 +29,8 @@ public class TaskList {
     }
 
     public void unmarkTask(int taskNumber) throws ChaiException {
-        Task task = checkTaskNumber(taskNumber);
+        checkTaskNumber(taskNumber);
+        Task task = tasks.get(taskNumber - 1);
         if (task.getDoneStatus()) {
             task.setDoneStatus(false);
             UserInterface.showTaskUnmarkedMessage(task);
@@ -37,14 +39,19 @@ public class TaskList {
         }
     }
 
-    private Task checkTaskNumber(int taskNumber) throws ChaiException {
+    public void deleteTask(int taskNumber) throws ChaiException {
+        checkTaskNumber(taskNumber);
+        Task removedTask = tasks.remove(taskNumber - 1);
+        UserInterface.showTaskDeletedMessage(removedTask, tasks.size());
+    }
+
+    private void checkTaskNumber(int taskNumber) throws ChaiException {
         if (tasks.isEmpty()) {
             ChaiException.taskListCannotBeEmpty();
         }
         if (taskNumber < 1 || taskNumber > tasks.size()) {
             ChaiException.taskNumberOutOfRange(tasks.size());
         }
-        return tasks.get(taskNumber - 1);
     }
 
     public void printTasks() {

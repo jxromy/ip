@@ -55,6 +55,11 @@ public class UserInterface {
         System.out.println(LINE + "\nSorry, this task has not been been done\n" + LINE);
     }
 
+    public static void showTaskDeletedMessage(Task task, int remainingTasks) {
+        System.out.println(LINE + "\nNoted. I've removed this task:\n " + task +
+                "\nNow you have " + remainingTasks + " tasks in the list.\n" + LINE);
+    }
+
     public static void showUnknownCommandMessage(String errorMessage) {
         System.out.println(LINE + "\nChai failure: " + errorMessage + '\n' + LINE);
     }

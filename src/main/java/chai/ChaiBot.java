@@ -71,6 +71,11 @@ public class ChaiBot {
             break;
         }
 
+        case "delete":
+            int taskNumber = Integer.parseInt(entry);
+            tasks.deleteTask(taskNumber);
+            break;
+
         default:
             throw new ChaiException("Unknown command: " + command);
         }
