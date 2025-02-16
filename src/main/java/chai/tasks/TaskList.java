@@ -2,18 +2,18 @@ package chai.tasks;
 
 import chai.exceptions.ChaiException;
 import chai.ui.UserInterface;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class TaskList {
-    private final ArrayList<Task> tasks;
+    private List<Task> tasks;
 
     public TaskList() {
-        this.tasks = new ArrayList<>();
+        this.tasks = Storage.loadTasks();
     }
 
     public void addTask(Task task) {
         tasks.add(task);
+        Storage.saveTasks(tasks);
         UserInterface.showTaskAddedMessage(task, tasks.size());
     }
 
@@ -22,6 +22,7 @@ public class TaskList {
         Task task = tasks.get(taskNumber - 1);
         if (!task.getDoneStatus()) {
             task.setDoneStatus(true);
+            Storage.saveTasks(tasks);
             UserInterface.showTaskMarkedMessage(task);
         } else {
             UserInterface.showTaskAlreadyMarkedMessage();
@@ -33,6 +34,7 @@ public class TaskList {
         Task task = tasks.get(taskNumber - 1);
         if (task.getDoneStatus()) {
             task.setDoneStatus(false);
+            Storage.saveTasks(tasks);
             UserInterface.showTaskUnmarkedMessage(task);
         } else {
             UserInterface.showTaskAlreadyUnmarkedMessage();

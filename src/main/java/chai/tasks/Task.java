@@ -4,10 +4,12 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description, boolean isDone) {
         this.description = description;
         this.isDone = false;
     }
+
+    public abstract String toSaveFormat();
 
     public boolean getDoneStatus() {
         return isDone;
