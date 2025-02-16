@@ -22,13 +22,15 @@ public class ChaiBot {
         String entry = commands.length > 1 ? commands[1] : "";
 
         switch (command) {
-        case "bye":
+        case "bye": {
             UserInterface.showExitMessage();
             return false;
+        }
 
-        case "list":
+        case "list": {
             tasks.printTasks();
             break;
+        }
 
         case "mark": {
             int taskNum = Integer.parseInt(entry);
@@ -42,10 +44,11 @@ public class ChaiBot {
             break;
         }
 
-        case "todo":
+        case "todo": {
             ChaiException.descriptionCannotBeEmpty(entry);
             tasks.addTask(new Todo(entry));
             break;
+        }
 
         case "deadline": {
             if (!entry.contains("/by")) {
@@ -71,8 +74,15 @@ public class ChaiBot {
             break;
         }
 
-        default:
+        case "delete": {
+            int taskNumber = Integer.parseInt(entry);
+            tasks.deleteTask(taskNumber);
+            break;
+        }
+
+        default: {
             throw new ChaiException("Unknown command: " + command);
+        }
         }
         return true;
     }
