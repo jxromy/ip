@@ -26,4 +26,9 @@ public class Event extends Task {
         return "[" + getTaskType() + "]" + getStatusIcon() + " " + description +
                 " (from: " + from + " to: " + to + ")";
     }
+
+    @Override
+    public String toSaveFormat() {
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+    }
 }

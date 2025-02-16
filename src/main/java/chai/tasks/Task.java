@@ -9,6 +9,8 @@ public abstract class Task {
         this.isDone = false;
     }
 
+    public abstract String toSaveFormat();
+
     public boolean getDoneStatus() {
         return isDone;
     }
