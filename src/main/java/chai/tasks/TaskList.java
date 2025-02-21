@@ -6,16 +6,14 @@ import java.util.List;
 
 public class TaskList {
     private List<Task> tasks;
-    private Storage storage;
 
-    public TaskList(List<Task> tasks, Storage storage) {
+    public TaskList(List<Task> tasks) {
         this.tasks = tasks;
-        this.storage = storage;
     }
 
     public void addTask(Task task) {
         tasks.add(task);
-        storage.saveTasks(tasks);
+        Storage.saveTasks(tasks);
         UserInterface.showTaskAddedMessage(task, tasks.size());
     }
 
@@ -24,7 +22,7 @@ public class TaskList {
         Task task = tasks.get(taskNumber - 1);
         if (!task.getDoneStatus()) {
             task.setDoneStatus(true);
-            storage.saveTasks(tasks);
+            Storage.saveTasks(tasks);
             UserInterface.showTaskMarkedMessage(task);
         } else {
             UserInterface.showTaskAlreadyMarkedMessage();
@@ -36,7 +34,7 @@ public class TaskList {
         Task task = tasks.get(taskNumber - 1);
         if (task.getDoneStatus()) {
             task.setDoneStatus(false);
-            storage.saveTasks(tasks);
+            Storage.saveTasks(tasks);
             UserInterface.showTaskUnmarkedMessage(task);
         } else {
             UserInterface.showTaskAlreadyUnmarkedMessage();

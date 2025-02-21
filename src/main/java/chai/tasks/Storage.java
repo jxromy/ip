@@ -5,23 +5,23 @@ import chai.exceptions.ChaiException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Storage {
-    private final String filePath;
-
-    public Storage(String filePath) {
-        this.filePath = filePath;
-    }
+    private static final String filePath = "data/tasks.txt";
 
     public List<Task> load() throws ChaiException {
         File file = new File(filePath);
         if (!file.exists()) {
             createFile(file);
-            return new ArrayList<>();
         }
 
-        return readTasksFromFile(file);
+        try {
+            return readTasksFromFile(file);
+        } catch (ChaiException e) {
+            throw new ChaiException("Error loading tasks from file: " + e.getMessage());
+        }
     }
 
     private void createFile(File file) {
@@ -37,7 +37,8 @@ public class Storage {
         List<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
-                Task task = parseTask(scanner.nextLine());
+                String line = scanner.nextLine();
+                Task task = parseTask(line);
                 if (task != null) {
                     tasks.add(task);
                 }
@@ -52,9 +53,13 @@ public class Storage {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) return null;
 
-        String type = parts[0];
-        boolean isDone = parts[1].equals("1");
-        String description = parts[2];
+        String type = parts[0].trim();
+        boolean isDone = parts[1].trim().equals("1");
+        String description = parts[2].trim();
+
+        if (description.isEmpty()) {
+            return null;
+        }
 
         switch (type) {
         case "T":
@@ -68,7 +73,7 @@ public class Storage {
         }
     }
 
-    public void saveTasks(List<Task> tasks) {
+    public static void saveTasks(List<Task> tasks) {
         try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : tasks) {
                 writer.write(task.toSaveFormat() + "\n");

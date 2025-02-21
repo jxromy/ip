@@ -3,12 +3,9 @@ package chai;
 import chai.exceptions.ChaiException;
 import chai.tasks.Parser;
 import chai.tasks.Storage;
-import chai.tasks.Task;
 import chai.tasks.TaskList;
 import chai.ui.UserInterface;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Chai {
@@ -16,25 +13,19 @@ public class Chai {
     private TaskList tasks;
     private Parser parser;
 
-    public Chai(String filePath) throws ChaiException {
-        storage = new Storage(filePath);
-
-        List<Task> loadedTasks;
+    public Chai() {
+        storage = new Storage();
         try {
-            loadedTasks = storage.load();
+            tasks = new TaskList(storage.load());
         } catch (ChaiException e) {
             UserInterface.showLoadingError();
-            loadedTasks = new ArrayList<>();
         }
-
-        tasks = new TaskList(loadedTasks, storage);
         parser = new Parser(tasks);
     }
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
         UserInterface.showWelcomeMessage();
-
         boolean isRunning = true;
         while (isRunning) {
             String input = scanner.nextLine().trim();
@@ -47,7 +38,7 @@ public class Chai {
         scanner.close();
     }
 
-    public static void main(String[] args) throws ChaiException {
-        new Chai("data/tasks.txt").run();
+    public static void main(String[] args) {
+        new Chai().run();
     }
 }
