@@ -40,7 +40,7 @@ public class UserInterface {
 
     public static void showTaskAddedMessage(Task task, int size) {
         System.out.println(LINE + "\nGot it. I've added this task:\n " + task +
-                "\nNow you have " + size + " tasks in the list.\n" + LINE);
+                "\nNow you have " + size + " tasks in the list. Time to start hustling!\n" + LINE);
     }
 
     public static void showTaskMarkedMessage(Task task) {
@@ -52,11 +52,11 @@ public class UserInterface {
     }
 
     public static void showTaskAlreadyMarkedMessage() {
-        System.out.println(LINE + "\nOops, this task was already been done\n" + LINE);
+        System.out.println(LINE + "\nThis task was already been done ^.^\n" + LINE);
     }
 
     public static void showTaskAlreadyUnmarkedMessage() {
-        System.out.println(LINE + "\nSorry, this task has not been been done\n" + LINE);
+        System.out.println(LINE + "\nThis task has not been done yet @.@\n" + LINE);
     }
 
     public static void showTaskDeletedMessage(Task task, int remainingTasks) {
