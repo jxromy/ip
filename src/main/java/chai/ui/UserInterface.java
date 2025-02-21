@@ -40,7 +40,7 @@ public class UserInterface {
 
     public static void showTaskAddedMessage(Task task, int size) {
         System.out.println(LINE + "\nGot it. I've added this task:\n " + task +
-                "\nNow you have " + size + " tasks in the list. Time to start hustling!\n" + LINE);
+                "\nNow you have " + size + " tasks in the list. Time to start hustling! ৻(  •̀ ᗜ •́  ৻)\n" + LINE);
     }
 
     public static void showTaskMarkedMessage(Task task) {
@@ -52,23 +52,23 @@ public class UserInterface {
     }
 
     public static void showTaskAlreadyMarkedMessage() {
-        System.out.println(LINE + "\nThis task was already been done ^.^\n" + LINE);
+        System.out.println(LINE + "\nThis task was already been done ♡⸜(ˆᗜˆ˵ )⸝♡\n" + LINE);
     }
 
     public static void showTaskAlreadyUnmarkedMessage() {
-        System.out.println(LINE + "\nThis task has not been done yet @.@\n" + LINE);
+        System.out.println(LINE + "\nThis task has not been done yet (.づ◡﹏◡)づ.\n" + LINE);
     }
 
     public static void showTaskDeletedMessage(Task task, int remainingTasks) {
-        System.out.println(LINE + "\nNoted. I've removed this task:\n " + task +
-                "\nNow you have " + remainingTasks + " tasks in the list.\n" + LINE);
+        System.out.println(LINE + "\nGotcha. I've removed\n " + task +
+                "\nNow you have " + remainingTasks + " tasks left (∩˃o˂∩)♡\n" + LINE);
     }
 
     public static void showUnknownCommandMessage(String errorMessage) {
-        System.out.println(LINE + "\nChai failure: " + errorMessage + '\n' + LINE);
+        System.out.println(LINE + "\nChai failure: " + errorMessage + "૮(˶╥︿╥)ა \n" + LINE);
     }
 
     public static void showLoadingError() {
-        System.out.println("Oops! There was an error loading your tasks. Try again later? >.< ");
+        System.out.println("Oops! There was an error loading your tasks. Try again later? ૮(˶╥︿╥)ა");
     }
 }

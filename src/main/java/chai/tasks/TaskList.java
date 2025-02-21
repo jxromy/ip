@@ -44,6 +44,7 @@ public class TaskList {
     public void deleteTask(int taskNumber) throws ChaiException {
         checkTaskNumber(taskNumber);
         Task removedTask = tasks.remove(taskNumber - 1);
+        Storage.saveTasks(tasks);
         UserInterface.showTaskDeletedMessage(removedTask, tasks.size());
     }
 
