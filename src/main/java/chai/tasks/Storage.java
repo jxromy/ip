@@ -1,32 +1,49 @@
 package chai.tasks;
 
+import chai.exceptions.ChaiException;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Storage {
-    private static final String FILE_PATH = "data/chai.txt";
+    private final String filePath;
 
-    public static List<Task> loadTasks() {
-        List<Task> tasks = new ArrayList<>();
-        File file = new File(FILE_PATH);
+    public Storage(String filePath) {
+        this.filePath = filePath;
+    }
 
+    public List<Task> load() throws ChaiException {
+        File file = new File(filePath);
         if (!file.exists()) {
-            file.getParentFile().mkdirs();
-            return tasks;
+            createFile(file);
+            return new ArrayList<>();
         }
 
+        return readTasksFromFile(file);
+    }
+
+    private void createFile(File file) {
+        try {
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Error creating task file: " + e.getMessage());
+        }
+    }
+
+    private List<Task> readTasksFromFile(File file) throws ChaiException {
+        List<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                Task task = parseTask(line);
+                Task task = parseTask(scanner.nextLine());
                 if (task != null) {
                     tasks.add(task);
                 }
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Error loading tasks: " + e.getMessage());
+            throw new ChaiException("Error loading tasks! " + e.getMessage());
         }
         return tasks;
     }
@@ -51,8 +68,8 @@ public class Storage {
         }
     }
 
-    public static void saveTasks(List<Task> tasks) {
-        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+    public void saveTasks(List<Task> tasks) {
+        try (FileWriter writer = new FileWriter(filePath)) {
             for (Task task : tasks) {
                 writer.write(task.toSaveFormat() + "\n");
             }

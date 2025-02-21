@@ -27,11 +27,15 @@ public class UserInterface {
 
     public static void showTaskList(List<Task> tasks) {
         System.out.println(LINE);
-        System.out.println(" Here are the tasks in your list:");
+        System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(" " + (i + 1) + "." + tasks.get(i));
         }
         System.out.println(LINE);
+    }
+
+    public static void showListEmpty() {
+        System.out.println(LINE + "\nYou haven't added any tasks!\n" + LINE);
     }
 
     public static void showTaskAddedMessage(Task task, int size) {
@@ -62,5 +66,9 @@ public class UserInterface {
 
     public static void showUnknownCommandMessage(String errorMessage) {
         System.out.println(LINE + "\nChai failure: " + errorMessage + '\n' + LINE);
+    }
+
+    public static void showLoadingError() {
+        System.out.println("Oops! There was an error loading your tasks. Try again later? >.< ");
     }
 }
