@@ -1,19 +1,24 @@
 package chai.tasks;
 
-public class Event extends Task {
-    private final String from;
-    private final String to;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-    public Event(String description, String from, String to) {
+public class Event extends Task {
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description, false);
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
-    public Event(String description, String from, String to, boolean isDone) {
+    public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description, isDone);
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
@@ -24,11 +29,28 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[" + getTaskType() + "]" + getStatusIcon() + " " + description +
-                " (from: " + from + " to: " + to + ")";
+                " (from: " + start.format(OUTPUT_FORMAT) + " to: " + end.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String toSaveFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " +
+                Storage.formatForStorage(start) + " | " + Storage.formatForStorage(end);
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 }
