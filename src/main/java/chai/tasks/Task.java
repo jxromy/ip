@@ -25,6 +25,10 @@ public abstract class Task {
 
     public abstract String getTaskType();
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String toString() {
         return "[" + getTaskType() + "]" + getStatusIcon() + " " + description;
