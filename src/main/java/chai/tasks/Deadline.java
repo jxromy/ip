@@ -1,11 +1,15 @@
 package chai.tasks;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents a task with a deadline.
  * A deadline task includes a description and a due date.
  */
 public class Deadline extends Task {
-    private final String by;
+    private final LocalDateTime deadline;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
      * Constructs a new Deadline task that is initially not done.
@@ -13,9 +17,9 @@ public class Deadline extends Task {
      * @param description The description of the deadline task.
      * @param by The due date of the task.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, LocalDateTime deadline) {
         super(description, false);
-        this.by = by;
+        this.deadline = deadline;
     }
 
     /**
@@ -25,9 +29,9 @@ public class Deadline extends Task {
      * @param by The due date of the task.
      * @param isDone Whether the task is completed.
      */
-    public Deadline(String description, String by, boolean isDone) {
+    public Deadline(String description, LocalDateTime deadline, boolean isDone) {
         super(description, isDone);
-        this.by = by;
+        this.deadline = deadline;
     }
 
     @Override
@@ -37,11 +41,11 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[" + getTaskType() + "]" + getStatusIcon() + " " + description + " (by: " + by + ")";
+        return "[" + getTaskType() + "]" + getStatusIcon() + " " + description + " (by: " + deadline.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String toSaveFormat() {
-        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + by;
+        return "D | " + (isDone ? "1" : "0") + " | " + description + " | " + Storage.formatForStorage(deadline);
     }
 }

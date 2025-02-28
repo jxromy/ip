@@ -14,6 +14,10 @@ public class ChaiException extends Exception {
         throw new ChaiException("Task number is out of range! (Valid range: 1 to " + max + ")");
     }
 
+    public static void taskDoesNotExist() throws ChaiException {
+        throw new ChaiException("Task not found");
+    }
+
     // ChaiBot
     public static void descriptionCannotBeEmpty() throws ChaiException {
             throw new ChaiException("What is your task?");

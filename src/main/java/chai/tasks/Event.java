@@ -1,11 +1,16 @@
 package chai.tasks;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  * Represents an event task with a start and end time.
  */
 public class Event extends Task {
-    private String from;
-    private String to;
+    private LocalDateTime start;
+    private LocalDateTime end;
+    private static final DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
      * Constructs an Event task that is initially not done.
@@ -14,10 +19,10 @@ public class Event extends Task {
      * @param from The start time of the event.
      * @param to The end time of the event.
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description, false);
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
     /**
@@ -28,10 +33,10 @@ public class Event extends Task {
      * @param to The end time of the event.
      * @param isDone Whether the task is completed.
      */
-    public Event(String description, String from, String to, boolean isDone) {
+    public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {
         super(description, isDone);
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.end = end;
     }
 
     @Override
@@ -42,11 +47,28 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[" + getTaskType() + "]" + getStatusIcon() + " " + description +
-                " (from: " + from + " to: " + to + ")";
+                " (from: " + start.format(OUTPUT_FORMAT) + " to: " + end.format(OUTPUT_FORMAT) + ")";
     }
 
     @Override
     public String toSaveFormat() {
-        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " + from + " | " + to;
+        return "E | " + (isDone ? "1" : "0") + " | " + description + " | " +
+                Storage.formatForStorage(start) + " | " + Storage.formatForStorage(end);
+    }
+
+    public LocalDateTime getStart() {
+        return start;
+    }
+
+    public void setStart(LocalDateTime start) {
+        this.start = start;
+    }
+
+    public LocalDateTime getEnd() {
+        return end;
+    }
+
+    public void setEnd(LocalDateTime end) {
+        this.end = end;
     }
 }

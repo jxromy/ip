@@ -3,6 +3,7 @@ package chai.ui;
 import chai.tasks.Task;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 public class UserInterface {
     private static final String LINE = "____________________________________________________________";
@@ -17,8 +18,8 @@ public class UserInterface {
         " (_'  '--'\\ |  | |  |  |  | |  |(_|  |    \n" +
         "   `-----' `--' `--'  `--' `--'  `--'    \n";
 
-    public static void showWelcomeMessage() {
-        System.out.println(LINE + "\nHello! I'm Chai\n" + LOGO + "What can I do for you?\n" + LINE);
+    public static void showWelcomeMessage(String now) {
+        System.out.println(LINE + "\nHello! I'm Chai\n" + LOGO + "It is " + now + " now\nWhat can I do for you?\n" + LINE);
     }
 
     public static void showExitMessage() {
@@ -64,8 +65,16 @@ public class UserInterface {
                 "\nNow you have " + remainingTasks + " tasks left (∩˃o˂∩)♡\n" + LINE);
     }
 
+    public static void showMatchingTaskMessage(List<Task> tasks) {
+        System.out.println(LINE + "\nHere are the matching tasks in your list:");
+        for (int i = 0; i < tasks.size(); i++) {
+            System.out.println((i + 1) + "." + tasks.get(i));
+        }
+        System.out.println(LINE);
+    }
+
     public static void showUnknownCommandMessage(String errorMessage) {
-        System.out.println(LINE + "\nChai failure: " + errorMessage + "૮(˶╥︿╥)ა \n" + LINE);
+        System.out.println(LINE + "\nChai failure: " + errorMessage + " ૮(˶╥︿╥)ა \n" + LINE);
     }
 
     public static void showLoadingError() {
