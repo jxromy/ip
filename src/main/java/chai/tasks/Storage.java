@@ -12,6 +12,12 @@ public class Storage {
     private static final String FILE_PATH = "data/tasks.txt";
     private static final DateTimeFormatter STORAGE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
+    /**
+     * Loads tasks from the tasks.txt file. If the file does not exist, it creates a new one.
+     *
+     * @return A list of tasks read from the file.
+     * @throws ChaiException If an error occurs while reading tasks.
+     */
     public List<Task> load() throws ChaiException {
         File file = new File(FILE_PATH);
         if (!file.exists()) {
@@ -34,6 +40,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Reads tasks from the specified file and parses them into a list.
+     *
+     * @param file The file to read tasks from.
+     * @return A list of tasks parsed from the file.
+     * @throws ChaiException If an error occurs while parsing tasks.
+     */
     private List<Task> readTasksFromFile(File file) throws ChaiException {
         List<Task> tasks = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
@@ -57,7 +70,13 @@ public class Storage {
             throw new DateTimeParseException("Invalid stored date format: " + dateStr, dateStr, 0);
         }
     }
-
+  
+    /**
+     * Parses a line from the file into a Task object.
+     *
+     * @param line The line containing task data.
+     * @return A Task object if parsing is successful, otherwise null.
+     */
     private static Task parseTask(String line) {
         String[] parts = line.split(" \\| ");
         if (parts.length < 3) return null;
@@ -90,6 +109,11 @@ public class Storage {
         }
     }
 
+    /**
+     * Saves the list of tasks to the tasks.txt file.
+     *
+     * @param tasks The list of tasks to be saved.
+     */
     public static void saveTasks(List<Task> tasks) {
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             for (Task task : tasks) {

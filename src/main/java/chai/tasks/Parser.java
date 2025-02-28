@@ -2,11 +2,13 @@ package chai.tasks;
 
 import chai.exceptions.ChaiException;
 import chai.ui.UserInterface;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Handles user input and parses commands for task management.
+ */
 public class Parser {
     private TaskList tasks;
 
@@ -56,11 +58,23 @@ public class Parser {
         ChaiException.incorrectFormat("Invalid date! Try: yyyy-MM-dd or dd/MM/yyyy");
         return null;
     }
-
+  
+    /**
+     * Constructs a Parser that interacts with the given TaskList.
+     *
+     * @param tasks The TaskList to manage.
+     */
     public Parser(TaskList tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Parses the user's input and executes the given command.
+     *
+     * @param input The full command entered by the user.
+     * @return {@code true} if the program should continue running, {@code false} if the user enters "bye" to exit.
+     * @throws ChaiException If the input is invalid or an error occurs during execution.
+     */
     public boolean parse(String input) throws ChaiException {
         String[] commands = input.split(" ", 2);
         String command = commands[0];
