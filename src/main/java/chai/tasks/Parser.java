@@ -3,13 +3,28 @@ package chai.tasks;
 import chai.exceptions.ChaiException;
 import chai.ui.UserInterface;
 
+/**
+ * Handles user input and parses commands for task management.
+ */
 public class Parser {
     private TaskList tasks;
 
+    /**
+     * Constructs a Parser that interacts with the given TaskList.
+     *
+     * @param tasks The TaskList to manage.
+     */
     public Parser(TaskList tasks) {
         this.tasks = tasks;
     }
 
+    /**
+     * Parses the user's input and executes the given command.
+     *
+     * @param input The full command entered by the user.
+     * @return {@code true} if the program should continue running, {@code false} if the user enters "bye" to exit.
+     * @throws ChaiException If the input is invalid or an error occurs during execution.
+     */
     public boolean parse(String input) throws ChaiException {
         String[] commands = input.split(" ", 2);
         String command = commands[0];
@@ -37,7 +52,7 @@ public class Parser {
         }
 
         case "todo":
-            ChaiException.descriptionCannotBeEmpty(entry);
+            ChaiException.descriptionCannotBeEmpty();
             tasks.addTask(new Todo(entry));
             break;
 

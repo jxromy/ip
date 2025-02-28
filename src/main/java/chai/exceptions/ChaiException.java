@@ -15,10 +15,8 @@ public class ChaiException extends Exception {
     }
 
     // ChaiBot
-    public static void descriptionCannotBeEmpty(String description) throws ChaiException {
-        if (description.isEmpty()) {
+    public static void descriptionCannotBeEmpty() throws ChaiException {
             throw new ChaiException("What is your task?");
-        }
     }
 
     public static void missingArgument(String argument) throws ChaiException {

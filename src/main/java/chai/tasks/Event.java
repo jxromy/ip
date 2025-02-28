@@ -1,15 +1,33 @@
 package chai.tasks;
 
+/**
+ * Represents an event task with a start and end time.
+ */
 public class Event extends Task {
-    private final String from;
-    private final String to;
+    private String from;
+    private String to;
 
+    /**
+     * Constructs an Event task that is initially not done.
+     *
+     * @param description The description of the event.
+     * @param from The start time of the event.
+     * @param to The end time of the event.
+     */
     public Event(String description, String from, String to) {
         super(description, false);
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Constructs an Event task with a specified completion status.
+     *
+     * @param description The description of the event.
+     * @param from The start time of the event.
+     * @param to The end time of the event.
+     * @param isDone Whether the task is completed.
+     */
     public Event(String description, String from, String to, boolean isDone) {
         super(description, isDone);
         this.from = from;
