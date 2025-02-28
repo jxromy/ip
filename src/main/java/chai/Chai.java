@@ -6,6 +6,8 @@ import chai.tasks.Storage;
 import chai.tasks.TaskList;
 import chai.ui.UserInterface;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Chai {
@@ -25,7 +27,8 @@ public class Chai {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        UserInterface.showWelcomeMessage();
+        DateTimeFormatter OUTPUT_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        UserInterface.showWelcomeMessage(LocalDateTime.now().format(OUTPUT_FORMAT));
         boolean isRunning = true;
         while (isRunning) {
             String input = scanner.nextLine().trim();

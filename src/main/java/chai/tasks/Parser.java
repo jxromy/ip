@@ -3,8 +3,59 @@ package chai.tasks;
 import chai.exceptions.ChaiException;
 import chai.ui.UserInterface;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Parser {
     private TaskList tasks;
+
+    private static final DateTimeFormatter[] DATE_FORMATS = {
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm"),
+            DateTimeFormatter.ofPattern("dd-MM-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy/MM/dd HHmm"),
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy-MM-d HH:mm"),
+            DateTimeFormatter.ofPattern("d-MM-yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy-MM-d HHmm"),
+            DateTimeFormatter.ofPattern("d-MM-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy/MM/d HH:mm"),
+            DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy/MM/d HHmm"),
+            DateTimeFormatter.ofPattern("d/MM/yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy-M-dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd-M-yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy-M-dd HHmm"),
+            DateTimeFormatter.ofPattern("dd-M-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy/M/dd HH:mm"),
+            DateTimeFormatter.ofPattern("dd/M/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy/M/dd HHmm"),
+            DateTimeFormatter.ofPattern("dd/M/yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy-M-d HH:mm"),
+            DateTimeFormatter.ofPattern("d-M-yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy-M-d HHmm"),
+            DateTimeFormatter.ofPattern("d-M-yyyy HHmm"),
+            DateTimeFormatter.ofPattern("yyyy/M/d HH:mm"),
+            DateTimeFormatter.ofPattern("d/M/yyyy HH:mm"),
+            DateTimeFormatter.ofPattern("yyyy/M/d HHmm"),
+            DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
+    };
+
+    private static LocalDateTime parseDate(String dateStr) throws ChaiException {
+        for (DateTimeFormatter formatter : DATE_FORMATS) {
+            try {
+                return LocalDateTime.parse(dateStr, formatter);
+            } catch (DateTimeParseException ignored) {
+                // Try the next format
+            }
+        }
+        ChaiException.incorrectFormat("Invalid date! Try: yyyy-MM-dd or dd/MM/yyyy");
+        return null;
+    }
 
     public Parser(TaskList tasks) {
         this.tasks = tasks;
@@ -46,10 +97,15 @@ public class Parser {
                 ChaiException.incorrectFormat("Deadline format incorrect. Use: deadline <task> /by <date>");
             }
             String[] deadlineParts = entry.split("\\s*/by\\s*", 2);
-            if (deadlineParts.length < 2) {
-                ChaiException.missingArgument("deadline");
+            if (deadlineParts[1].isEmpty()) {
+                ChaiException.missingArgument("date and time");
             }
-            tasks.addTask(new Deadline(deadlineParts[0], deadlineParts[1]));
+            try {
+                LocalDateTime deadlineTime = parseDate(deadlineParts[1]);
+                tasks.addTask(new Deadline(deadlineParts[0], deadlineTime));
+            } catch (ChaiException e) {
+                ChaiException.incorrectFormat("I'm confused. Try: dd-MM-yyyy HHmm");
+            }
             break;
         }
 
@@ -61,7 +117,18 @@ public class Parser {
             if (eventParts.length < 3) {
                 ChaiException.missingArgument("start and end time");
             }
-            tasks.addTask(new Event(eventParts[0], eventParts[1], eventParts[2]));
+            try {
+                LocalDateTime startTime = parseDate(eventParts[1]);
+                LocalDateTime endTime = parseDate(eventParts[2]);
+
+                if (startTime.isAfter(endTime)) {
+                    throw new ChaiException("Start time cannot be after end time.");
+                }
+
+                tasks.addTask(new Event(eventParts[0], startTime, endTime));
+            } catch (ChaiException e) {
+                throw new ChaiException("Invalid date format. Use: yyyy-MM-dd HH:mm");
+            }
             break;
         }
 
