@@ -37,9 +37,19 @@ public class Parser {
         }
 
         case "todo":
-            ChaiException.descriptionCannotBeEmpty(entry);
+            if (entry.isEmpty()) {
+                ChaiException.descriptionCannotBeEmpty();
+            }
             tasks.addTask(new Todo(entry));
             break;
+
+        case "find": {
+            if (entry.isEmpty()) {
+                ChaiException.descriptionCannotBeEmpty();
+            }
+            tasks.findTasks(entry);
+            break;
+        }
 
         case "deadline": {
             if (!entry.contains("/by")) {

@@ -2,6 +2,8 @@ package chai.tasks;
 
 import chai.exceptions.ChaiException;
 import chai.ui.UserInterface;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskList {
@@ -55,6 +57,23 @@ public class TaskList {
         if (taskNumber < 1 || taskNumber > tasks.size()) {
             ChaiException.taskNumberOutOfRange(tasks.size());
         }
+    }
+
+    public void findTasks(String taskName) throws ChaiException {
+        if (tasks.isEmpty()) {
+            ChaiException.taskListCannotBeEmpty();
+        }
+        if (taskName.isEmpty()) {
+            ChaiException.taskDoesNotExist();
+            return;
+        }
+        List<Task> matchingTasks = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getDescription().toLowerCase().contains(taskName.toLowerCase())) {
+                matchingTasks.add(task);
+            }
+        }
+        UserInterface.showMatchingTaskMessage(matchingTasks);
     }
 
     public void printTasks() {
