@@ -118,6 +118,10 @@ public class TaskList {
                 matchingTasks.add(task);
             }
         }
+        if (matchingTasks.isEmpty()) {
+            ChaiException.taskDoesNotExist();
+            return;
+        }
         UserInterface.showMatchingTaskMessage(matchingTasks);
     }
 
