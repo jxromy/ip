@@ -97,6 +97,13 @@ public class TaskList {
         }
     }
 
+    /**
+     * Searches for tasks that contain the specified keyword in their description.
+     * Displays a list of matching tasks to the user.
+     *
+     * @param taskName The keyword to search for in task descriptions.
+     * @throws ChaiException If the task list is empty or no matching tasks are found.
+     */
     public void findTasks(String taskName) throws ChaiException {
         if (tasks.isEmpty()) {
             ChaiException.taskListCannotBeEmpty();

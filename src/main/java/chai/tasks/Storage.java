@@ -31,6 +31,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Creates a new file if it does not already exist.
+     * If the parent directories do not exist, they will be created.
+     *
+     * @param file The file to be created.
+     */
     private void createFile(File file) {
         try {
             file.getParentFile().mkdirs();
@@ -63,6 +69,14 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Parses a stored date string into a LocalDateTime object.
+     * Throws an exception if the date format is invalid.
+     *
+     * @param dateStr The date string to be parsed.
+     * @return A LocalDateTime object representing the parsed date.
+     * @throws DateTimeParseException If the date format is incorrect.
+     */
     private static LocalDateTime parseStoredDate(String dateStr) {
         try {
             return LocalDateTime.parse(dateStr, STORAGE_FORMAT);

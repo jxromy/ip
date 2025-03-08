@@ -16,8 +16,8 @@ public class Event extends Task {
      * Constructs an Event task that is initially not done.
      *
      * @param description The description of the event.
-     * @param from The start time of the event.
-     * @param to The end time of the event.
+     * @param start The start time of the event.
+     * @param end The end time of the event.
      */
     public Event(String description, LocalDateTime start, LocalDateTime end) {
         super(description, false);
@@ -29,8 +29,8 @@ public class Event extends Task {
      * Constructs an Event task with a specified completion status.
      *
      * @param description The description of the event.
-     * @param from The start time of the event.
-     * @param to The end time of the event.
+     * @param start The start time of the event.
+     * @param end The end time of the event.
      * @param isDone Whether the task is completed.
      */
     public Event(String description, LocalDateTime start, LocalDateTime end, boolean isDone) {

@@ -15,7 +15,7 @@ public class Deadline extends Task {
      * Constructs a new Deadline task that is initially not done.
      *
      * @param description The description of the deadline task.
-     * @param by The due date of the task.
+     * @param deadline The due date of the task.
      */
     public Deadline(String description, LocalDateTime deadline) {
         super(description, false);
@@ -26,7 +26,7 @@ public class Deadline extends Task {
      * Constructs a new Deadline task with a specified completion status.
      *
      * @param description The description of the deadline task.
-     * @param by The due date of the task.
+     * @param deadline The due date of the task.
      * @param isDone Whether the task is completed.
      */
     public Deadline(String description, LocalDateTime deadline, boolean isDone) {

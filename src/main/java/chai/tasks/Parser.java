@@ -47,6 +47,14 @@ public class Parser {
             DateTimeFormatter.ofPattern("d/M/yyyy HHmm"),
     };
 
+    /**
+     * Parses a date string into a LocalDateTime object using multiple possible date formats.
+     * If none of the predefined formats match, an exception is thrown.
+     *
+     * @param dateStr The date string to be parsed.
+     * @return A LocalDateTime object representing the parsed date.
+     * @throws ChaiException If the date format is invalid.
+     */
     private static LocalDateTime parseDate(String dateStr) throws ChaiException {
         for (DateTimeFormatter formatter : DATE_FORMATS) {
             try {
